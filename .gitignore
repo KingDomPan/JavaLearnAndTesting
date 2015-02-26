@@ -5,4 +5,9 @@
 target/
 *.iml
 .idea/
-oops-security/src/main/webapp/META-INF/MANIFEST.MF
+*.class
+.mtj.tmp/
+*.jar
+*.war
+*.ear
+hs_err_pid*
