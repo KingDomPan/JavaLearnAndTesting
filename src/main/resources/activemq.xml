@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/aop 
+           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+           http://www.springframework.org/schema/tx
+           http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+    <bean id="simpleMessageConverter" class="com.panqd.activemq.spring.SimpleMessageConverter" />
+
+    <bean class="com.panqd.activemq.spring.SmartLifecycleBean" />
+
+    <bean id="jmsFactory" class="org.apache.activemq.pool.PooledConnectionFactory"
+        destroy-method="stop">
+        <property name="connectionFactory">
+            <bean class="org.apache.activemq.ActiveMQConnectionFactory">
+                <property name="brokerURL">
+                    <value>tcp://192.168.35.167:61616</value>
+                </property>
+                <property name="useAsyncSend">
+                    <value>true</value>
+                </property>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="queueDestination" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg index="0" value="panqd.queue" />
+    </bean>
+
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory">
+            <ref local="jmsFactory" />
+        </property>
+        <property name="defaultDestination">
+            <ref local="queueDestination" />
+        </property>
+        <!-- 
+            <property name="messageConverter"> 
+                <ref local="simpleMessageConverter"/> 
+            </property> 
+        -->
+    </bean>
+
+    <bean id="messageSender" class="com.panqd.activemq.spring.SimpleMessageSender">
+        <property name="jmsTemplate">
+            <ref local="jmsTemplate" />
+        </property>
+    </bean>
+    
+    <!-- 消息驱动Bean, 在EJB中称为MDB, 用来监听队列中的消息, 异步接收处理消息  -->
+    <bean id="messageListener" class="com.panqd.activemq.spring.SimpleMessageListener" />
+
+    <!-- 消息监听器, 实现了Spring生命周期接口SmartLifecycle, 启动后运行监听 -->
+    <bean id="jmsContainer"
+        class="org.springframework.jms.listener.DefaultMessageListenerContainer"
+        lazy-init="false">
+        <property name="connectionFactory" ref="jmsFactory"></property>
+        <property name="destination" ref="queueDestination"></property>
+        <property name="messageListener" ref="messageListener"></property>
+        <property name="concurrentConsumers" value="5"></property>
+        <!--
+            0:CACHE_NONE,
+            1:CACHE_CONNECTION,
+            2:CACHE_SESSION,
+            3:CACHE_CONSUMER,
+            4:CACHE_AUTO
+        -->  
+        <property name="cacheLevel" value="0"></property>
+    </bean>
+
+</beans>           

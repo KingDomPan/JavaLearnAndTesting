@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/aop 
+           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+           http://www.springframework.org/schema/tx
+           http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+          
+    <bean id="logProxy" class="com.panqd.spring.aop.before.LogBeforeAdvice" /> 
+    
+    <bean id="helloProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="interfaces" value="com.panqd.spring.aop.before.IHello" />
+        <property name="target">
+            <bean class="com.panqd.spring.aop.before.HelloSpeaker"/>
+        </property>
+        <property name="interceptorNames">
+            <list>
+                <value>logProxy</value>
+            </list>
+        </property>
+    </bean>    
+    
+    <bean id="logProxyAfter" class="com.panqd.spring.aop.after.LogAfterAdvice" /> 
+    
+    <bean id="helloProxyAfter" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="interfaces" value="com.panqd.spring.aop.after.IHello" />
+        <property name="target">
+            <bean class="com.panqd.spring.aop.after.HelloSpeaker"/>
+        </property>
+        <property name="interceptorNames">
+            <list>
+                <value>logProxyAfter</value>
+            </list>
+        </property>
+    </bean>
+    
+    
+    <bean id="logProxyAround" class="com.panqd.spring.aop.around.LogInterceptor" /> 
+    
+    <bean id="helloProxyAround" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="interfaces" value="com.panqd.spring.aop.around.IHello" />
+        <property name="target">
+            <bean class="com.panqd.spring.aop.around.HelloSpeaker"/>
+        </property>
+        <property name="interceptorNames">
+            <list>
+                <value>logProxyAround</value>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="logProxyThrow" class="com.panqd.spring.aop.throww.BaseThrowAdvice" /> 
+    
+    <bean id="helloProxyThrow" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="interfaces" value="com.panqd.spring.aop.throww.IHello" />
+        <property name="target">
+            <bean class="com.panqd.spring.aop.throww.HelloSpeaker"/>
+        </property>
+        <property name="interceptorNames">
+            <list>
+                <value>logProxyThrow</value>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="logAdvisorProxy" class="com.panqd.spring.pointcut.advisor.LogBeforeAdvice" /> 
+    
+    <bean id="helloAdvisor" class="org.springframework.aop.support.NameMatchMethodPointcutAdvisor">
+        <property name="advice" ref="logAdvisorProxy"/>
+        <property name="mappedName" value="*Newble"/>
+    </bean>
+    
+    <bean id="helloProxyAdvisor" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="interfaces" value="com.panqd.spring.pointcut.advisor.IHello" />
+        <property name="target">
+            <bean class="com.panqd.spring.pointcut.advisor.HelloSpeaker"/>
+        </property>
+        <property name="interceptorNames">
+            <list>
+                <value>helloAdvisor</value>
+            </list>
+        </property>
+    </bean>
+    
+</beans>           
