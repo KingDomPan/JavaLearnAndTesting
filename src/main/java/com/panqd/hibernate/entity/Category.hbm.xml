@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.panqd.hibernate.entity.Category" table="CATEGORY">
+    
+        <id name="id" type="long" column="ID">
+            <generator class="native"></generator>
+        </id>
+        
+        <property name="name" type="string">
+            <column name="NAME" length="15"></column>
+        </property>
+
+        <many-to-one name="parentCategory" column="PARENT_CATEGORY_ID"
+            class="com.panqd.hibernate.entity.Category" />
+
+        <set name="childCategories" cascade="save-update" inverse="true">
+            <key column="PARENT_CATEGORY_ID"></key>
+            <one-to-many class="com.panqd.hibernate.entity.Category"></one-to-many>
+        </set>
+    </class>
+</hibernate-mapping>        

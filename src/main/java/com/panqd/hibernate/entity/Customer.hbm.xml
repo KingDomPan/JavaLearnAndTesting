@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.panqd.hibernate.entity.Customer" table="CUSTOMERS">
+        <id name="id" column="ID" type="long">
+            <generator class="native" />
+        </id>
+        <property name="name" column="NAME" type="string" />
+        <property name="email" column="EMAIL" type="string" />
+        <property name="password" column="PASSWORD" type="string" />
+        <property name="phone" column="PHONE" type="int" />
+        <property name="address" column="ADDRESS" type="string" />
+        <property name="sex" column="SEX" type="character" />
+        <property name="married" column="IS_MARRIED" type="boolean" />
+        <property name="description" column="DESCRIPTION" type="text" />
+        <property name="image" column="IMAGE" type="binary" />
+        <property name="birthday" column="BIRTHDAY" type="date" />
+        <property name="registeredTime" column="REGISTERED_TIME"
+            type="timestamp" />
+        <set name="orders" cascade="save-update" inverse="true">
+            <key column="CUSTOMER_ID"></key>
+            <one-to-many class="com.panqd.hibernate.entity.Order"/>
+        </set>
+    </class>
+</hibernate-mapping>
