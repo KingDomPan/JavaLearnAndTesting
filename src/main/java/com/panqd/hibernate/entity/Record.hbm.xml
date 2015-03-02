@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.panqd.hibernate.entity.Record" table="RECORD">
+
+        <id name="id" type="long" column="ID">
+            <generator class="native" />
+        </id>
+        
+        <property name="contractDate" type="date">
+            <column name="contractDate"></column>
+        </property>
+
+        <property name="contractNumber" type="string">
+            <column name="contractNumber" length="255"></column>
+        </property>
+
+        <property name="projectName" type="string">
+            <column name="projectName" length="255"></column>
+        </property>
+
+        <property name="contractAttainment" type="string">
+            <column name="contractAttainment" length="255"></column>
+        </property>
+
+        <property name="sendPackageName" type="string">
+            <column name="sendPackageName" length="255"></column>
+        </property>
+
+        <property name="projectDept" type="string">
+            <column name="projectDept" length="255"></column>
+        </property>
+
+        <property name="income" type="long">
+            <column name="income"></column>
+        </property>
+
+        <property name="outlay4Material" type="long">
+            <column name="outlay4Material"></column>
+        </property>
+
+        <property name="outlay4Service" type="long">
+            <column name="outlay4Service"></column>
+        </property>
+
+        <property name="outlay4Mechanic" type="long">
+            <column name="outlay4Mechanic"></column>
+        </property>
+
+        <property name="remark" type="string">
+            <column name="remark" length="512"></column>
+        </property>
+
+    </class>
+</hibernate-mapping>        

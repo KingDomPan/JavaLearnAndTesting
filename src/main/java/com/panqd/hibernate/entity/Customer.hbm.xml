@@ -19,9 +19,19 @@
         <property name="birthday" column="BIRTHDAY" type="date" />
         <property name="registeredTime" column="REGISTERED_TIME"
             type="timestamp" />
-        <set name="orders" cascade="save-update" inverse="true">
+        <set name="orders" cascade="save-update" inverse="true" fetch="join">
             <key column="CUSTOMER_ID"></key>
             <one-to-many class="com.panqd.hibernate.entity.Order"/>
         </set>
     </class>
+    <query name="findByName">
+        <![CDATA[
+            from Customer c where c.name like :name
+        ]]>
+    </query>
+    
+    <sql-query name="findByName2">
+        <return class="com.panqd.hibernate.entity.Customer"></return>
+        select {c.*} from CUSTOMERS c where c.name like :name
+    </sql-query>
 </hibernate-mapping>
