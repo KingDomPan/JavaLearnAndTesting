@@ -36,7 +36,7 @@ public class FetureCallableTest {
         Future<String> task = exec.submit(call);
         Thread.sleep(1000);
         try {
-            task.cancel(true); //在子线程运行时, 取消子线程任务运行, 抛出CancellationException
+            // task.cancel(true); //在子线程运行时, 取消子线程任务运行, 抛出CancellationException
         } catch (Exception e) {
             System.out.println("CancellationException");
         }
@@ -50,7 +50,7 @@ public class FetureCallableTest {
         }
         // 阻塞当前线程, 即主线程, 并等待子线程结束
         // 一旦线程任务被取消, 无法再get, 否则抛出CancellationException
-        task.get(); 
+        System.out.println(task.get()); 
         exec.shutdown();  
         System.out.println("end main thread"); 
     }

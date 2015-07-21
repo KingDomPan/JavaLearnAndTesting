@@ -7,12 +7,13 @@ import java.util.concurrent.Executors;
 
 /**
  * @BlockingQueue BlockQueue如果为空, 取线程就会进去阻塞进入等待状态, 直到队列不为空才会被唤醒
- *                BlockingQueue如果为满, 放现车购就会进入阻塞等待状态, 直到队列有位子了才会被唤醒
- * @常用方法 add(anObject) 如果BlockingQueue可以容纳,则返回true, 否则抛出'队列满'异常 offer(anObject)
- *       表示如果可能的话, 如果BlockingQueue可以容纳, 则返回true, 否则返回false put(anObject)
- *       如果BlockQueue没有空间, 则调用此方法的线程被阻断直到BlockingQueue里面有空间再继续 poll(time)
- *       取走BlockingQueue里排在首位的对象, 若不能立即取出, 则可以等time参数规定的时间, 取不到时返回null take()
- *       取走BlockingQueue里排在首位的对象, 若BlockingQueue为空, 阻断进入等待状态直到Blocking有新的对象被加入为止
+ *                BlockingQueue如果为满, 放线程就会进入阻塞等待状态, 直到队列有位子了才会被唤醒
+ * @常用方法 
+ *  add(anObject) 如果BlockingQueue可以容纳,则返回true, 否则抛出'队列满'异常 
+ *  offer(anObject) 表示如果可能的话, 如果BlockingQueue可以容纳, 则返回true, 否则返回false 
+ *  put(anObject) 如果BlockQueue没有空间, 则调用此方法的线程被阻断直到BlockingQueue里面有空间再继续 
+ *  poll(time) 取走BlockingQueue里排在首位的对象, 若不能立即取出, 则可以等time参数规定的时间, 取不到时返回null 
+ *  take() 取走BlockingQueue里排在首位的对象, 若BlockingQueue为空, 阻断进入等待状态直到Blocking有新的对象被加入为止
  * @实现类 ArrayBlockingQueue 规定大小的BlockingQueue, 构造函数带int参数来指明其大小. FIFO
  *      LinkedBlockingQueue 大小不定, 构造带参数, BQ有限制, 否则按照Integer.MAX_VALUE. FIFO
  *      PriorityBlockingQueue 数组实现, 容量至少为1, 默认为11,

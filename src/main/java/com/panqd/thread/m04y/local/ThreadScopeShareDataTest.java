@@ -5,7 +5,8 @@ import java.util.Map;
 import java.util.Random;
 
 /**
- * 线程B会覆盖线程A的数据, 无法在线程范围内进行数据共享 定义线程范围的HashMap
+ * 线程B会覆盖线程A的数据, 无法在线程范围内进行数据共享 
+ * 定义线程范围的HashMap
  * @author KingDom
  */
 public class ThreadScopeShareDataTest {

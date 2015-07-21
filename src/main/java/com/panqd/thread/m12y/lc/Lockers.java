@@ -78,7 +78,7 @@ public class Lockers {
      * ReadWriteLock内置两个Lock, 一个是读的Lock, 一个是写的Lock. 多个线程可同时得到读的Lock,
      * 但只有一个线程能得到写的Lock, 而且写的Lock被锁定后, 任何线程都不能得到Lock. ReadWriteLock提供的方法有:
      * readLock(): 返回一个读的lock writeLock(): 返回一个写的lock, 此lock是排他的.
-     * ReadWriteLockTest很适合处理类似文件的读写操作. 读的时候可以同时读, 但不能写；写的时候既不能同时写也不能读.
+     * ReadWriteLockTest很适合处理类似文件的读写操作. 读的时候可以同时读, 但不能写; 写的时候既不能同时写也不能读.
      */
     public static class ReadWriteLockTest {
         ReadWriteLock lock = new ReentrantReadWriteLock();
